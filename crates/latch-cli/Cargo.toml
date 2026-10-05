@@ -1,0 +1,28 @@
+[package]
+name = "latch-cli"
+description = "The latch command-line tool"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+default-run = "latch"
+
+[dependencies]
+latch-agents = { path = "../latch-agents" }
+latch-audit = { path = "../latch-audit" }
+latch-core = { path = "../latch-core" }
+latch-policy = { path = "../latch-policy" }
+latch-transaction = { path = "../latch-transaction" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+
+[[bin]]
+name = "latch"
+path = "src/main.rs"
+
+[[test]]
+name = "cli_exit"
+path = "src/cli_exit_tests.rs"

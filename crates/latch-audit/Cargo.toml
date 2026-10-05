@@ -1,0 +1,15 @@
+[package]
+name = "latch-audit"
+description = "Hash-chained, tamper-evident audit log with querying, timelines and JSONL export"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[dependencies]
+latch-core = { path = "../latch-core" }
+serde.workspace = true
+serde_json.workspace = true

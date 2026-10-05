@@ -1,0 +1,16 @@
+[package]
+name = "latch-policy"
+description = "Deterministic, default-deny policy engine with JSON/YAML documents and offline scenario tests"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[dependencies]
+latch-core = { path = "../latch-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde_yaml = "0.9"

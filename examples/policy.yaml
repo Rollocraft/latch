@@ -1,0 +1,58 @@
+# Example Latch policy document.
+#
+# Everything is denied unless a rule allows it. When several rules match, a
+# deny always wins, then an approval requirement, then an allow. A limit rule
+# attaches a budget to an allowed action; it never allows anything by itself.
+version: 1
+policies:
+  - id: default
+    level: company
+    rules:
+      - id: read-project
+        description: Agents may read files inside the project.
+        action: { kind: exact, value: file.read }
+        resource: { kind: prefix, value: "file:///project/" }
+        environment: { kind: any }
+        actor: { kind: any }
+        effect: { kind: allow }
+
+      - id: protect-secrets
+        description: Environment files hold credentials and are never readable.
+        action: { kind: prefix, value: "file." }
+        resource: { kind: prefix, value: "file:///project/.env" }
+        environment: { kind: any }
+        actor: { kind: any }
+        effect: { kind: deny }
+
+      - id: write-project
+        description: Agents may write files inside the project.
+        action: { kind: exact, value: file.write }
+        resource: { kind: prefix, value: "file:///project/" }
+        environment: { kind: any }
+        actor: { kind: any }
+        effect: { kind: allow }
+
+      - id: meter-writes
+        description: Writes draw from a per-session byte budget.
+        action: { kind: exact, value: file.write }
+        resource: { kind: any }
+        environment: { kind: any }
+        actor: { kind: any }
+        effect: { kind: limit, budget: bytes_written, maximum: 10485760 }
+
+      - id: review-pushes
+        description: Pushing changes leaves the machine and needs a human.
+        action: { kind: exact, value: git.push }
+        resource: { kind: any }
+        environment: { kind: any }
+        actor: { kind: any }
+        effect: { kind: ask }
+
+      - id: no-force-push
+        description: History rewrites on shared branches are never allowed.
+        action: { kind: exact, value: git.push }
+        resource: { kind: any }
+        environment: { kind: any }
+        actor: { kind: any }
+        arguments: { kind: any_flag, values: ["--force", "-f"] }
+        effect: { kind: deny }

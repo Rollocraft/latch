@@ -1,0 +1,16 @@
+[package]
+name = "latch-runtime"
+description = "Latch execution gate: capability tokens, approvals, quorums and budget accounting"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[dependencies]
+getrandom = "0.3"
+latch-audit = { path = "../latch-audit" }
+latch-core = { path = "../latch-core" }
+latch-policy = { path = "../latch-policy" }

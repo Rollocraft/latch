@@ -1,0 +1,10 @@
+/target
+
+# IDE and editor state
+.idea/
+.vscode/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db

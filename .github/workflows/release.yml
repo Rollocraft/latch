@@ -1,0 +1,61 @@
+name: Release
+
+# Builds the `latch` binary for every supported platform and attaches it to a
+# GitHub release when that release is published.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  binaries:
+    name: ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+          - os: macos-latest
+            target: aarch64-apple-darwin
+          - os: macos-latest
+            target: x86_64-apple-darwin
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      # rust-toolchain.toml pins the version; only the target is added here.
+      - run: rustup target add ${{ matrix.target }}
+      - run: cargo build --release --locked --bin latch --target ${{ matrix.target }}
+      - name: Package
+        shell: bash
+        run: |
+          name="latch-${GITHUB_REF_NAME}-${{ matrix.target }}"
+          mkdir "$name"
+          cp README.md LICENSE CHANGELOG.md "$name/"
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            cp "target/${{ matrix.target }}/release/latch.exe" "$name/"
+            7z a "$name.zip" "$name" > /dev/null
+            asset="$name.zip"
+          else
+            cp "target/${{ matrix.target }}/release/latch" "$name/"
+            tar -czf "$name.tar.gz" "$name"
+            asset="$name.tar.gz"
+          fi
+          if command -v sha256sum > /dev/null; then
+            sha256sum "$asset" > "$asset.sha256"
+          else
+            shasum -a 256 "$asset" > "$asset.sha256"
+          fi
+          echo "ASSET=$asset" >> "$GITHUB_ENV"
+      - name: Upload
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$GITHUB_REF_NAME" "$ASSET" "$ASSET.sha256" --clobber

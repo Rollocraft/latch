@@ -1,0 +1,12 @@
+[package]
+name = "latch-substrate"
+description = "Enforcement substrate vocabulary for Latch: assurance levels, backend capabilities and resource limits"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[dependencies]

@@ -1,0 +1,257 @@
+{
+  "version": 1,
+  "scenarios": [
+    {
+      "id": "read-source",
+      "now": 10,
+      "session": {
+        "id": "session-1",
+        "policies": [
+          "default"
+        ],
+        "identity": {
+          "id": "agent://acme/coder",
+          "organization": "acme",
+          "team": "platform",
+          "owner": "alice",
+          "purpose": "feature work",
+          "provider": "local",
+          "model": "example",
+          "model_version": "1",
+          "runtime": "latch",
+          "environment": "development",
+          "device": "workstation",
+          "created_at": 0,
+          "expires_at": 1000,
+          "trust_level": 0
+        }
+      },
+      "action": {
+        "id": "read-source",
+        "name": "file.read",
+        "resource": "file:///project/src/main.rs",
+        "arguments": [],
+        "risk": 0,
+        "reversibility": "fully_reversible"
+      },
+      "expected": "allow"
+    },
+    {
+      "id": "read-secrets",
+      "now": 10,
+      "session": {
+        "id": "session-1",
+        "policies": [
+          "default"
+        ],
+        "identity": {
+          "id": "agent://acme/coder",
+          "organization": "acme",
+          "team": "platform",
+          "owner": "alice",
+          "purpose": "feature work",
+          "provider": "local",
+          "model": "example",
+          "model_version": "1",
+          "runtime": "latch",
+          "environment": "development",
+          "device": "workstation",
+          "created_at": 0,
+          "expires_at": 1000,
+          "trust_level": 0
+        }
+      },
+      "action": {
+        "id": "read-secrets",
+        "name": "file.read",
+        "resource": "file:///project/.env",
+        "arguments": [],
+        "risk": 0,
+        "reversibility": "fully_reversible"
+      },
+      "expected": "deny"
+    },
+    {
+      "id": "read-outside-project",
+      "now": 10,
+      "session": {
+        "id": "session-1",
+        "policies": [
+          "default"
+        ],
+        "identity": {
+          "id": "agent://acme/coder",
+          "organization": "acme",
+          "team": "platform",
+          "owner": "alice",
+          "purpose": "feature work",
+          "provider": "local",
+          "model": "example",
+          "model_version": "1",
+          "runtime": "latch",
+          "environment": "development",
+          "device": "workstation",
+          "created_at": 0,
+          "expires_at": 1000,
+          "trust_level": 0
+        }
+      },
+      "action": {
+        "id": "read-outside-project",
+        "name": "file.read",
+        "resource": "file:///etc/passwd",
+        "arguments": [],
+        "risk": 0,
+        "reversibility": "fully_reversible"
+      },
+      "expected": "deny"
+    },
+    {
+      "id": "write-source",
+      "now": 10,
+      "session": {
+        "id": "session-1",
+        "policies": [
+          "default"
+        ],
+        "identity": {
+          "id": "agent://acme/coder",
+          "organization": "acme",
+          "team": "platform",
+          "owner": "alice",
+          "purpose": "feature work",
+          "provider": "local",
+          "model": "example",
+          "model_version": "1",
+          "runtime": "latch",
+          "environment": "development",
+          "device": "workstation",
+          "created_at": 0,
+          "expires_at": 1000,
+          "trust_level": 0
+        }
+      },
+      "action": {
+        "id": "write-source",
+        "name": "file.write",
+        "resource": "file:///project/src/main.rs",
+        "arguments": [],
+        "risk": 10,
+        "reversibility": "fully_reversible"
+      },
+      "expected": "limited"
+    },
+    {
+      "id": "delete-source",
+      "now": 10,
+      "session": {
+        "id": "session-1",
+        "policies": [
+          "default"
+        ],
+        "identity": {
+          "id": "agent://acme/coder",
+          "organization": "acme",
+          "team": "platform",
+          "owner": "alice",
+          "purpose": "feature work",
+          "provider": "local",
+          "model": "example",
+          "model_version": "1",
+          "runtime": "latch",
+          "environment": "development",
+          "device": "workstation",
+          "created_at": 0,
+          "expires_at": 1000,
+          "trust_level": 0
+        }
+      },
+      "action": {
+        "id": "delete-source",
+        "name": "file.delete",
+        "resource": "file:///project/src/main.rs",
+        "arguments": [],
+        "risk": 40,
+        "reversibility": "partially_reversible"
+      },
+      "expected": "deny"
+    },
+    {
+      "id": "push",
+      "now": 10,
+      "session": {
+        "id": "session-1",
+        "policies": [
+          "default"
+        ],
+        "identity": {
+          "id": "agent://acme/coder",
+          "organization": "acme",
+          "team": "platform",
+          "owner": "alice",
+          "purpose": "feature work",
+          "provider": "local",
+          "model": "example",
+          "model_version": "1",
+          "runtime": "latch",
+          "environment": "development",
+          "device": "workstation",
+          "created_at": 0,
+          "expires_at": 1000,
+          "trust_level": 0
+        }
+      },
+      "action": {
+        "id": "push",
+        "name": "git.push",
+        "resource": "git://github.com/acme/app",
+        "arguments": [
+          "origin",
+          "main"
+        ],
+        "risk": 55,
+        "reversibility": "partially_reversible"
+      },
+      "expected": "approval_required"
+    },
+    {
+      "id": "force-push",
+      "now": 10,
+      "session": {
+        "id": "session-1",
+        "policies": [
+          "default"
+        ],
+        "identity": {
+          "id": "agent://acme/coder",
+          "organization": "acme",
+          "team": "platform",
+          "owner": "alice",
+          "purpose": "feature work",
+          "provider": "local",
+          "model": "example",
+          "model_version": "1",
+          "runtime": "latch",
+          "environment": "development",
+          "device": "workstation",
+          "created_at": 0,
+          "expires_at": 1000,
+          "trust_level": 0
+        }
+      },
+      "action": {
+        "id": "force-push",
+        "name": "git.push",
+        "resource": "git://github.com/acme/app",
+        "arguments": [
+          "--force",
+          "origin",
+          "main"
+        ],
+        "risk": 85,
+        "reversibility": "irreversible"
+      },
+      "expected": "deny"
+    }
+  ]
+}

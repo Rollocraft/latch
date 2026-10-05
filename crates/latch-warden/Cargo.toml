@@ -1,0 +1,14 @@
+[package]
+name = "latch-warden"
+description = "Organization-scoped sandbox supervision and kill switch for Latch"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[dependencies]
+latch-sandbox = { path = "../latch-sandbox" }
+latch-substrate = { path = "../latch-substrate" }

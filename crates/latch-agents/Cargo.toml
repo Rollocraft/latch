@@ -1,0 +1,15 @@
+[package]
+name = "latch-agents"
+description = "Agent manifests, identity binding and permission diffs for Latch"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[dependencies]
+latch-core = { path = "../latch-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }

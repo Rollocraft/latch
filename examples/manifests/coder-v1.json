@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "agent": { "name": "coder", "version": "1.0.0" },
+  "identity": {
+    "id": "agent://acme/coder",
+    "organization": "acme",
+    "team": "platform",
+    "owner": "alice",
+    "purpose": "feature work",
+    "runtime": "latch",
+    "environment": "development",
+    "device": "workstation"
+  },
+  "requires": [
+    {
+      "action": "file.read",
+      "environment": "development",
+      "resource": { "kind": "subtree", "resource": "file:///project/src" }
+    },
+    {
+      "action": "file.write",
+      "environment": "development",
+      "resource": { "kind": "subtree", "resource": "file:///project/src" }
+    }
+  ]
+}
