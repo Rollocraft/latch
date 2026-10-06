@@ -235,8 +235,6 @@ Latch is a Cargo workspace of small, focused crates:
 | [`latch-tui`](crates/latch-tui) | Bounded, escaped terminal rendering for human review |
 | [`latch-cli`](crates/latch-cli) | The `latch` command-line tool |
 
-Design decisions are recorded as ADRs in [`docs/adr`](docs/adr).
-
 ## Security model
 
 - **Fail closed.** Unknown fields, oversized inputs, missing policies, expired
